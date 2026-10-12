@@ -1,7 +1,7 @@
 {
-  "name": "workbench",
+  "name": "tokendance-workbench",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -28,5 +28,7 @@
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
-  }
+  },
+  "description": "零后端的词元跳动 AI 能力工作台：浏览器直连网关，多协议调用，看得见每次花费",
+  "license": "MIT"
 }

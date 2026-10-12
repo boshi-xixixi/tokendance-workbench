@@ -108,4 +108,4 @@ export const myCap: Capability = {
 
 ## License
 
-待定。
+MIT。随便拿去改，但请把你自己的 `APP_URL` 换掉 —— 归因是按这个值算的。
