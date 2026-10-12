@@ -1,0 +1,153 @@
+@import 'tailwindcss';
+
+/*
+  两套主题共用同一组语义令牌：浅色写在 @theme 里，深色在 .dark 下整体覆盖变量。
+  所有工具类都引用 var(--color-*)，所以覆盖即换肤，组件里不需要写 dark: 前缀。
+  灰阶与状态色都按 WCAG AA 校准过：小字在 surface / canvas / sunken 三种底上都 >=4.5:1。
+*/
+@theme {
+  --color-canvas: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-sunken: #f1f3f6;
+  --color-line: #e6e8ec;
+  --color-line-strong: #d3d8e0;
+  --color-scrim: #0b0d12;
+
+  --color-ink: #16181d;
+  --color-muted: #555b64;
+  --color-faint: #676d76;
+
+  --color-brand: #4b6bfb;
+  --color-brand-deep: #3550d8;
+  --color-brand-ink: #3550d8;
+  --color-brand-soft: #eef2ff;
+  --color-on-brand: #ffffff;
+  --color-violet: #7c5cff;
+
+  --color-ok: #08764c;
+  --color-warn: #a15c00;
+  --color-bad: #c0362f;
+
+  --radius-card: 20px;
+  --radius-control: 12px;
+
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px -12px rgba(16, 24, 40, 0.12);
+  --shadow-pop: 0 12px 32px -8px rgba(16, 24, 40, 0.18);
+  --shadow-ring: 0 0 0 3px rgba(75, 107, 251, 0.18);
+
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+.dark {
+  --color-canvas: #0e1014;
+  --color-surface: #171a20;
+  --color-sunken: #1f232b;
+  --color-line: #272c35;
+  --color-line-strong: #3a414d;
+  --color-scrim: #05070a;
+
+  --color-ink: #e9ecf1;
+  --color-muted: #a3abb9;
+  --color-faint: #828c9c;
+
+  --color-brand: #6c87ff;
+  --color-brand-deep: #5b79f5;
+  --color-brand-ink: #9db2ff;
+  --color-brand-soft: #1c2440;
+  --color-on-brand: #0e1014;
+  --color-violet: #9b7dff;
+
+  --color-ok: #4ed09a;
+  --color-warn: #f2b544;
+  --color-bad: #ff8a80;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5), 0 10px 28px -14px rgba(0, 0, 0, 0.7);
+  --shadow-pop: 0 16px 40px -10px rgba(0, 0, 0, 0.75);
+  --shadow-ring: 0 0 0 3px rgba(108, 135, 255, 0.32);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s var(--ease-enter), color 0.25s var(--ease-enter);
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: var(--color-brand-soft);
+}
+
+:where(button, a, select, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-ring);
+  border-radius: var(--radius-control);
+}
+
+@layer base {
+  /* 必须放在 base 层里：未分层的规则优先级高于工具类，
+     写在外面的话 button 上的 text-* 会被 color: inherit 全部吃掉。 */
+  textarea,
+  input,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@layer components {
+  .field {
+    width: 100%;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    transition: border-color 0.18s var(--ease-enter);
+  }
+}
+
+.field:hover {
+  border-color: var(--color-line-strong);
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--color-brand);
+  box-shadow: var(--shadow-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
